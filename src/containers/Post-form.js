@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "@version/react-router-v3";
+import { Field, reduxForm } from "redux-form";
 
 class PostForm extends Component {
   render() {
@@ -9,19 +10,43 @@ class PostForm extends Component {
         <form action="">
           <div className="form-group">
             <label>Titre</label>
-            <input type="text" className="form-control" />
+            <div>
+              <Field
+                name="title"
+                component="input"
+                type="text"
+                placeholder="Entrez le titre"
+                className="form-control"
+              />
+            </div>
             <div></div>
           </div>
 
           <div className="form-group">
             <label>Description</label>
-            <textarea className="form-control" rows="3"></textarea>
+            <div>
+              <Field
+                name="content"
+                className="form-control"
+                component="textarea"
+                placeholder="Entrez une description"
+              />
+            </div>
+
             <div></div>
           </div>
 
           <div className="form-group">
             <label>Auteur</label>
-            <input type="text" className="form-control" />
+            <div>
+              <Field
+                name="author"
+                component="input"
+                type="text"
+                placeholder="Qui est l'auteur"
+                className="form-control"
+              />
+            </div>
             <div></div>
           </div>
           <Link to={"/"} className="button_space">
@@ -36,4 +61,6 @@ class PostForm extends Component {
   }
 }
 
-export default PostForm;
+export default reduxForm({
+  form: "simple" // a unique identifier for this form
+})(PostForm);
