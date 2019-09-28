@@ -8,7 +8,9 @@ import { browserHistory } from "@version/react-router-v3";
 
 const formConfig = {
   form: "createPostForm",
-  fields: ["title", "content", "author"]
+  fields: ["title", "content", "author"],
+  validate: validate,
+  initialValues: { author: "Moi" }
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -16,7 +18,8 @@ const mapDispatchToProps = dispatch => ({
 });
 class PostForm extends Component {
   render() {
-    const { fields, handleSubmit } = this.props;
+    const { fields, handleSubmit, errors } = this.props;
+    console.log(errors);
 
     return (
       <div className="container">
@@ -34,7 +37,6 @@ class PostForm extends Component {
                 {...fields.title}
               />
             </div>
-            <div></div>
           </div>
 
           <div className="form-group">
@@ -48,8 +50,6 @@ class PostForm extends Component {
                 {...fields.content}
               />
             </div>
-
-            <div></div>
           </div>
 
           <div className="form-group">
@@ -59,17 +59,19 @@ class PostForm extends Component {
                 name="author"
                 component="input"
                 type="text"
-                placeholder="Qui est l'auteur"
                 className="form-control"
                 {...fields.author}
               />
             </div>
-            <div></div>
           </div>
           <Link to={"/"} className="button_space">
             <button className="btn btn-danger">Retour</button>
           </Link>
-          <button type="submit" className="btn btn-primary">
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={this.props.invalid}
+          >
             Créer
           </button>
         </form>
@@ -81,6 +83,21 @@ class PostForm extends Component {
     this.props.createPost(post);
     browserHistory.push("/");
   }
+}
+
+function validate(values) {
+  const errors = {};
+  if (!values.title) {
+    errors.title = "Veuillez remplir le titre";
+  }
+  if (!values.content) {
+    errors.content = "Veuillez remplir la description";
+  }
+  if (!values.author) {
+    errors.author = "Veuillez remplir l'auteur";
+  }
+
+  return errors;
 }
 
 export default connect(
