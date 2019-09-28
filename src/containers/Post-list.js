@@ -3,7 +3,8 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { readAllPost, deletePost } from "../actions/index";
 import PostListItem from "../components/Post-list-item";
-
+import { Link } from "@version/react-router-v3";
+import "../style/Animation.css";
 class PostList extends Component {
   componentWillMount() {
     this.props.readAllPost();
@@ -12,15 +13,13 @@ class PostList extends Component {
   renderPosts() {
     const { posts } = this.props;
     if (posts) {
-      return posts.map(post => {
-        return (
-          <PostListItem
-            key={post.id}
-            post={post}
-            deletePostCallBack={post => this.deletePostCallBack(post)}
-          />
-        );
-      });
+      return posts.map(post => (
+        <PostListItem
+          key={post.id}
+          post={post}
+          deletePostCallBack={post => this.deletePostCallBack(post)}
+        />
+      ));
     }
   }
 
@@ -33,7 +32,14 @@ class PostList extends Component {
 
     return (
       <div className="container">
-        <h1 className="mb-5 mt-5">Liste des posts</h1>
+        <h1 className="mb-3 mt-2">Liste des posts</h1>
+
+        <div className="button_add">
+          <Link to={"create-post"}>
+            <button className="btn btn-primary btn-circle btn-lg">+</button>
+          </Link>
+        </div>
+
         <table className="table table-hover">
           <thead>
             <tr>
