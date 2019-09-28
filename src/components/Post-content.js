@@ -1,11 +1,13 @@
 import React from "react";
 
-const PostContent = post => {
+const PostContent = props => {
+  const { post } = props;
+
   return (
-    <div>
+    <div className="container">
       <h2>{post.title}</h2>
       <p>{post.content}</p>
-      <p>Auteur : {post.author}</p>
+      <p>{post.author}</p>
     </div>
   );
 };
